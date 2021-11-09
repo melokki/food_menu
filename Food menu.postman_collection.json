@@ -1,0 +1,603 @@
+{
+	"info": {
+		"_postman_id": "758831b0-db8d-4eda-8f12-9a96b9071dcb",
+		"name": "Food menu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Should Pass Requests",
+			"item": [
+				{
+					"name": "Cateogries",
+					"item": [
+						{
+							"name": "Create Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const schema = {",
+											"  \"data\": {",
+											"    \"name\": {",
+											"      \"type\": \"string\",",
+											"    },",
+											"    \"description\": {",
+											"      \"type\": \"string\",",
+											"    }",
+											"  },",
+											"  \"message\": {",
+											"      \"type\": \"string\"",
+											"  }",
+											"};",
+											"",
+											"pm.collectionVariables.set('categoryId', jsonData.data.id)",
+											"",
+											"",
+											"pm.test('Check response', () => {",
+											"    pm.response.to.have.status(201)",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"    pm.expect(jsonData).to.have.property('data')",
+											"})",
+											"",
+											"pm.test('Check data property', () => {",
+											"    pm.response.to.have.jsonSchema(schema);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"data\": {\n        \"name\": \"Test category\",\n        \"description\": \" Test category description\"\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const schema = {",
+											"  \"data\": {",
+											"    \"name\": {",
+											"      \"type\": \"string\",",
+											"    },",
+											"    \"description\": {",
+											"      \"type\": \"string\",",
+											"    },",
+											"    \"items\": {",
+											"        \"type\": \"array\"",
+											"    },",
+											"    \"groups\": { \"type\": \"array\"}",
+											"  },",
+											"  };",
+											"  ",
+											"pm.test('Check response', () => {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"    pm.expect(jsonData).to.have.property('data')",
+											"})",
+											"",
+											"pm.test('Check data property', () => {",
+											"    pm.response.to.have.jsonSchema(schema);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/categories/{{categoryId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories",
+										"{{categoryId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const schema = {",
+											"  \"data\": {",
+											"    \"name\": {",
+											"      \"type\": \"string\",",
+											"    },",
+											"    \"description\": {",
+											"      \"type\": \"string\",",
+											"    }",
+											"  },",
+											"  \"message\": {",
+											"      \"type\": \"string\"",
+											"  }",
+											"};",
+											"pm.test('Check response', () => {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"    pm.expect(jsonData).to.have.property('data')",
+											"})",
+											"",
+											"pm.test('Check data property', () => {",
+											"    pm.response.to.have.jsonSchema(schema);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"data\": {\n        \"name\": \"Test category updated\",\n        \"description\": \" test category updated\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/categories/{{categoryId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories",
+										"{{categoryId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.collectionVariables.unset('categoryId')",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/categories/{{categoryId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories",
+										"{{categoryId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show Categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Items",
+					"item": [
+						{
+							"name": "Create Item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const schema = {",
+											"  \"data\": {",
+											"    \"name\": {",
+											"      \"type\": \"string\",",
+											"    },",
+											"    \"description\": {",
+											"      \"type\": \"string\",",
+											"    }",
+											"  },",
+											"  \"message\": {",
+											"      \"type\": \"string\"",
+											"  }",
+											"};",
+											"",
+											"pm.collectionVariables.set('itemId', jsonData.data.id)",
+											"",
+											"",
+											"pm.test('Check response', () => {",
+											"    pm.response.to.have.status(201)",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"    pm.expect(jsonData).to.have.property('data')",
+											"})",
+											"",
+											"pm.test('Check data property', () => {",
+											"    pm.response.to.have.jsonSchema(schema);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"data\": {\n        \"name\": \"Test item\",\n        \"description\": \"test item description\",\n        \"price\": 15\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/items",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"items"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show Item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const schema = {",
+											"  \"data\": {",
+											"    \"name\": {",
+											"      \"type\": \"string\",",
+											"    },",
+											"    \"description\": {",
+											"      \"type\": \"string\",",
+											"    },",
+											"  },",
+											"  };",
+											"  ",
+											"pm.test('Check response', () => {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"    pm.expect(jsonData).to.have.property('data')",
+											"})",
+											"",
+											"pm.test('Check data property', () => {",
+											"    pm.response.to.have.jsonSchema(schema);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/items/{{itemId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"items",
+										"{{itemId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const jsonData = pm.response.json();",
+											"const schema = {",
+											"  \"data\": {",
+											"    \"name\": {",
+											"      \"type\": \"string\",",
+											"    },",
+											"    \"description\": {",
+											"      \"type\": \"string\",",
+											"    }",
+											"  },",
+											"  \"message\": {",
+											"      \"type\": \"string\"",
+											"  }",
+											"};",
+											"pm.test('Check response', () => {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"    pm.expect(jsonData).to.have.property('data')",
+											"})",
+											"",
+											"pm.test('Check data property', () => {",
+											"    pm.response.to.have.jsonSchema(schema);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"data\": {\n        \"name\": \"Test item updated\",\n        \"description\": \" test item description updated\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/items/{{itemId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"items",
+										"{{itemId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"    pm.collectionVariables.unset('itemId')",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/items/{{itemId}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"items",
+										"{{itemId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Should Not Pass Requests",
+			"item": [
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "Create",
+							"item": [
+								{
+									"name": "Create Category with no data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const jsonData = pm.response.json();",
+													"const schema = {",
+													"  \"message\": {",
+													"      \"type\": \"string\"",
+													"  }",
+													"};",
+													"",
+													"pm.test('Check response', () => {",
+													"    pm.response.to.have.status(400)",
+													"    pm.response.to.be.withBody;",
+													"    pm.response.to.be.json;",
+													"    pm.expect(jsonData).to.have.property('errors')",
+													"})",
+													"",
+													"pm.test('Check data property', () => {",
+													"    pm.response.to.have.jsonSchema(schema);",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3333/categories",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3333",
+											"path": [
+												"categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Category with invalid data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"const jsonData = pm.response.json();",
+													"const schema = {",
+													"  \"message\": {",
+													"      \"type\": \"string\"",
+													"  }",
+													"};",
+													"",
+													"pm.test('Check response', () => {",
+													"    pm.response.to.have.status(400)",
+													"    pm.response.to.be.withBody;",
+													"    pm.response.to.be.json;",
+													"    pm.expect(jsonData).to.have.property('errors')",
+													"})",
+													"",
+													"pm.test('Check data property', () => {",
+													"    pm.response.to.have.jsonSchema(schema);",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"data\": {\n        \"name\": 12345,\n        \"description\": 12345\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3333/categories",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3333",
+											"path": [
+												"categories"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "categoryId",
+			"value": ""
+		},
+		{
+			"key": "itemId",
+			"value": ""
+		}
+	]
+}
